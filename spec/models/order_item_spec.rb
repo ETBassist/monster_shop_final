@@ -40,5 +40,13 @@ RSpec.describe OrderItem do
       expect(@order_item_1.fulfilled).to eq(true)
       expect(@ogre.inventory).to eq(3)
     end
+
+    it '.find_discount' do
+      @brian.bulk_discounts.create!(percent: 0.05,
+                                                required_quantity: 10)
+      discount2 = @brian.bulk_discounts.create!(percent: 0.55,
+                                                required_quantity: 20)
+      expect(@order_item_3.find_discount).to eq(discount2)
+    end
   end
 end

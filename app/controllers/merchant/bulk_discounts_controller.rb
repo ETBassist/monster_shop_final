@@ -13,6 +13,10 @@ class Merchant::BulkDiscountsController < ApplicationController
     @bulk_discount = BulkDiscount.new
   end
 
+  def edit
+    @bulk_discount = BulkDiscount.find(params[:id])
+  end
+
   def create
     discount = BulkDiscount.new(percent: calculated_percent,
       required_quantity: params[:bulk_discount][:required_quantity],

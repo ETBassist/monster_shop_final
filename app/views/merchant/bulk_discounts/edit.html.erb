@@ -1,0 +1,10 @@
+<%= form_with model: @bulk_discount, method: :patch, url: "/merchant/bulk_discounts/#{@bulk_discount.id}", local: true do |f| %>
+
+  <%= f.label :percent %>
+  <%= f.number_field :percent, id: :percent, value: (@bulk_discount.percent * 100 if @bulk_discount.percent) %> 
+
+  <%= f.label :required_quantity %>
+  <%= f.number_field :required_quantity, id: :required_quantity, value: @bulk_discount.required_quantity %> 
+
+  <%= f.submit "Update Bulk Discount" %>
+<% end %>

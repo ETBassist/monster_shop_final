@@ -1,0 +1,9 @@
+<%= form_with model: @bulk_discount, url: '/merchant/bulk_discounts' do |f| %>
+  <%= f.label :percent %>
+  <%= f.number_field :percent, id: :percent %>
+
+  <%= f.label :required_quantity %>
+  <%= f.number_field :required_quantity, id: :required_quantity %>
+
+  <%= f.submit "Create Bulk Discount" %>
+<% end %>

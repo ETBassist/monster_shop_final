@@ -31,5 +31,13 @@ feature 'Bulk Discount Index' do
 
       expect(page).to_not have_selector("#discount-#{@discount3.id}")
     end
+
+    it 'I see a link to create a new discount' do
+      visit '/merchant/bulk_discounts'
+
+      click_link("New Discount")
+
+      expect(current_path).to eq("/merchant/bulk_discounts/new")
+    end
   end
 end

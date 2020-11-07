@@ -35,6 +35,7 @@ class Merchant::BulkDiscountsController < ApplicationController
     @bulk_discount.update(percent: calculated_percent,
       required_quantity: params[:bulk_discount][:required_quantity])
     if @bulk_discount.save
+      flash[:success] = "Discount Updated"
       redirect_to "/merchant/bulk_discounts/#{@bulk_discount.id}"
     else
       flash.now[:notice] = @bulk_discount.errors.full_messages.to_sentence

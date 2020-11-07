@@ -2,7 +2,7 @@ class Merchant::BulkDiscountsController < ApplicationController
   # before_action :require_merchant
 
   def index
-    @discounts = BulkDiscount.where(user_id: current_user.id)
+    @discounts = BulkDiscount.where(merchant_id: current_user.merchant.id)
   end
 
   def show
@@ -20,7 +20,7 @@ class Merchant::BulkDiscountsController < ApplicationController
   def create
     discount = BulkDiscount.new(percent: calculated_percent,
       required_quantity: params[:bulk_discount][:required_quantity],
-      user_id: current_user.id)
+      merchant_id: current_user.merchant.id)
     if discount.save
       flash[:success] = "Discount Created"
       redirect_to '/merchant/bulk_discounts'

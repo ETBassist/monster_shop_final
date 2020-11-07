@@ -49,5 +49,18 @@ feature 'Bulk Discount Index' do
 
       expect(current_path).to eq("/merchant/bulk_discounts/#{@discount1.id}")
     end
+
+    it 'I see a link to delete a discount' do
+      visit '/merchant/bulk_discounts'
+      
+      within("#discount-#{@discount1.id}") do
+        click_link("Delete #{@discount1.id}")
+      end
+
+      expect(current_path).to eq('/merchant/bulk_discounts')
+      expect(page).to_not have_selector("#discount-#{@discount1.id}")
+
+      expect(page).to have_selector("#discount-#{@discount2.id}")
+    end
   end
 end

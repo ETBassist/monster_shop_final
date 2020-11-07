@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_07_025154) do
+ActiveRecord::Schema.define(version: 2020_11_07_205032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2020_11_07_025154) do
   create_table "bulk_discounts", force: :cascade do |t|
     t.float "percent"
     t.integer "required_quantity"
-    t.bigint "user_id"
-    t.index ["user_id"], name: "index_bulk_discounts_on_user_id"
+    t.bigint "merchant_id"
+    t.index ["merchant_id"], name: "index_bulk_discounts_on_merchant_id"
   end
 
   create_table "items", force: :cascade do |t|
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 2020_11_07_025154) do
     t.index ["merchant_id"], name: "index_users_on_merchant_id"
   end
 
-  add_foreign_key "bulk_discounts", "users"
+  add_foreign_key "bulk_discounts", "merchants"
   add_foreign_key "items", "merchants"
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "orders"

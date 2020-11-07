@@ -16,5 +16,12 @@ feature 'Discount Show Page' do
       expect(page).to have_content(@discount.percent)
       expect(page).to have_content(@discount.required_quantity)
     end
+
+    it "I see a link to edit that discount" do
+      visit "/merchant/bulk_discounts/#{@discount.id}"
+
+      click_link("Edit Discount")
+      expect(current_path).to eq("/merchant/bulk_discounts/#{@discount.id}/edit")
+    end
   end
 end

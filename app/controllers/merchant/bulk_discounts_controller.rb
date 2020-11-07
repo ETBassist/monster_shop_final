@@ -1,5 +1,5 @@
 class Merchant::BulkDiscountsController < ApplicationController
-  before_action :require_merchant
+  # before_action :require_merchant
 
   def index
     @discounts = BulkDiscount.where(user_id: current_user.id)
@@ -31,11 +31,14 @@ class Merchant::BulkDiscountsController < ApplicationController
   end
 
   def update
-    discount = BulkDiscount.find(params[:id])
-    discount.update(percent: calculated_percent,
+    @bulk_discount = BulkDiscount.find(params[:id])
+    @bulk_discount.update(percent: calculated_percent,
       required_quantity: params[:bulk_discount][:required_quantity])
-    if discount.save
-      redirect_to "/merchant/bulk_discounts/#{discount.id}"
+    if @bulk_discount.save
+      redirect_to "/merchant/bulk_discounts/#{@bulk_discount.id}"
+    else
+      flash.now[:notice] = @bulk_discount.errors.full_messages.to_sentence
+      render :edit
     end
   end
 
@@ -46,6 +49,6 @@ class Merchant::BulkDiscountsController < ApplicationController
   end
 
   def calculated_percent
-    params[:bulk_discount][:percent].to_i * 0.01
+    params[:bulk_discount][:percent].to_i * 0.01 unless params[:bulk_discount][:percent].empty?
   end
 end

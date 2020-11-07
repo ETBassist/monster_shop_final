@@ -24,5 +24,15 @@ feature "Edit Discount Page" do
       expect(current_path).to eq("/merchant/bulk_discounts/#{@discount.id}")
       expect(page).to have_content("10.0%")
     end
+
+    it "if I improperly fill in the fields it flashes a message and I'm returned to the edit page" do
+      visit "/merchant/bulk_discounts/#{@discount.id}/edit"
+
+      fill_in(:percent, with: nil)
+      click_button("Update Bulk Discount")
+      expect(page).to have_content("Percent can't be blank")
+      expect(page).to have_field(:percent)
+      expect(page).to have_field(:required_quantity)
+    end
   end
 end

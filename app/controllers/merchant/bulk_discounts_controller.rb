@@ -1,4 +1,6 @@
 class Merchant::BulkDiscountsController < ApplicationController
+  before_action :require_merchant
+
   def index
     @discounts = BulkDiscount.where(user_id: current_user.id)
   end

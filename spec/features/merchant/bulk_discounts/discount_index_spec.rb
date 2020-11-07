@@ -39,5 +39,15 @@ feature 'Bulk Discount Index' do
 
       expect(current_path).to eq("/merchant/bulk_discounts/new")
     end
+
+    it 'I see each discounts id is a link to its show page' do
+      visit '/merchant/bulk_discounts'
+
+      within("#discount-#{@discount1.id}") do
+        click_link("Discount #{@discount1.id}")
+      end
+
+      expect(current_path).to eq("/merchant/bulk_discounts/#{@discount1.id}")
+    end
   end
 end

@@ -22,6 +22,7 @@ feature "Edit Discount Page" do
       fill_in(:percent, with: 10)
       click_button("Update Bulk Discount")
       expect(current_path).to eq("/merchant/bulk_discounts/#{@discount.id}")
+      expect(page).to have_content("Discount Updated")
       expect(page).to have_content("10.0%")
     end
 

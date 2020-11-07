@@ -13,7 +13,7 @@ feature 'New Discount Page' do
       fill_in(:percent, with: 10)
       fill_in(:required_quantity, with: 10)
       click_button("Create Bulk Discount")
-      expect(current_path).to eq('merchant/bulk_discounts')
+      expect(current_path).to eq('/merchant/bulk_discounts')
       expect(page).to have_content("Discount Created")
     end
   end

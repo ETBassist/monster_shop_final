@@ -54,7 +54,7 @@ feature 'Bulk Discount Index' do
       visit '/merchant/bulk_discounts'
       
       within("#discount-#{@discount1.id}") do
-        click_link("Delete #{@discount1.id}")
+        click_button("Delete #{@discount1.id}")
       end
 
       expect(current_path).to eq('/merchant/bulk_discounts')

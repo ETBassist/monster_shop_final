@@ -43,11 +43,13 @@ class Merchant::BulkDiscountsController < ApplicationController
     end
   end
 
-  private
-
-  def discount_params
-    params.require(:bulk_discount).permit(:percent, :required_quantity)
+  def destroy
+    discount = BulkDiscount.find(params[:id])
+    discount.destroy
+    redirect_to "/merchant/bulk_discounts"
   end
+
+  private
 
   def calculated_percent
     params[:bulk_discount][:percent].to_i * 0.01 unless params[:bulk_discount][:percent].empty?

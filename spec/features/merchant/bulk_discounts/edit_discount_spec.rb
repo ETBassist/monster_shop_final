@@ -9,11 +9,21 @@ feature "Edit Discount Page" do
                                                          required_quantity: 100)
     end
 
-    it "has a form with the fields prepopulated with the discounts details" do
+    it "I see a form with the fields prepopulated with the discounts details" do
       visit "/merchant/bulk_discounts/#{@discount.id}/edit"
 
       expect(page).to have_field(:percent, with: (@discount.percent * 100))
       expect(page).to have_field(:required_quantity, with: @discount.required_quantity)
+    end
+
+    it "I can fill in the form with new values to update a discount" do
+      visit "/merchant/bulk_discounts/#{@discount.id}/edit"
+
+      fill_in(:percent, with: 10)
+      save_and_open_page
+      click_button("Update Bulk Discount")
+      expect(current_path).to eq("/merchant/bulk_discounts/#{@discount.id}")
+      expect(page).to have_content("10.0%")
     end
   end
 end

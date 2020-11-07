@@ -5,6 +5,10 @@ class Merchant::BulkDiscountsController < ApplicationController
     @discounts = BulkDiscount.where(user_id: current_user.id)
   end
 
+  def show
+    @discount = BulkDiscount.find(params[:id])
+  end
+
   def new
     @bulk_discount = BulkDiscount.new
   end

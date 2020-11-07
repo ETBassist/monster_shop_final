@@ -14,6 +14,9 @@ class Merchant::BulkDiscountsController < ApplicationController
     if discount.save
       flash[:success] = "Discount Created"
       redirect_to '/merchant/bulk_discounts'
+    else
+      flash.now[:notice] = discount.errors.full_messages.to_sentence
+      render :new
     end
   end
 

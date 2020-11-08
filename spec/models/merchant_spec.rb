@@ -57,5 +57,12 @@ RSpec.describe Merchant do
     it '.order_items_by_order' do
       expect(@megan.order_items_by_order(@order_1.id)).to eq([@order_item_1])
     end
+
+    it '.find_discount(quantity)' do
+      discount = @megan.bulk_discounts.create!(percent: 0.05,
+                                               required_quantity: 10)
+      expect(@megan.find_discount(10)).to eq(discount)
+      expect(@megan.find_discount(9)).to eq(nil)
+    end
   end
 end

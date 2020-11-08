@@ -12,6 +12,8 @@ RSpec.describe Cart do
         @ogre.id.to_s => 1,
         @giant.id.to_s => 2
         })
+      @discount = @brian.bulk_discounts.create!(percent: 0.5,
+                                                required_quantity: 5)
     end
 
     it '.contents' do
@@ -43,14 +45,40 @@ RSpec.describe Cart do
       expect(@cart.grand_total).to eq(120)
     end
 
+    it '.grand_total with discount' do
+      5.times do
+        @cart.add_item(@hippo.id.to_s)
+      end
+      expect(@cart.grand_total).to eq(245.0)
+    end
+
+    it '.discount_amount(item_id)' do
+      5.times do
+        @cart.add_item(@hippo.id.to_s)
+      end
+      expect(@cart.discount_amount(@hippo)).to eq(125.0)
+    end
+
     it '.count_of()' do
       expect(@cart.count_of(@ogre.id)).to eq(1)
       expect(@cart.count_of(@giant.id)).to eq(2)
     end
 
+    it '.subtotal_without_discount(item_id)' do
+      5.times do
+        @cart.add_item(@hippo.id.to_s)
+      end
+      expect(@cart.subtotal_without_discount(@hippo.id)).to eq(250.0)
+    end
+
     it '.subtotal_of()' do
       expect(@cart.subtotal_of(@ogre.id)).to eq(20)
       expect(@cart.subtotal_of(@giant.id)).to eq(100)
+      # subtotal of item with discount
+      5.times do
+        @cart.add_item(@hippo.id.to_s)
+      end
+      expect(@cart.subtotal_of(@hippo.id)).to eq(125.0)
     end
 
     it '.limit_reached?()' do

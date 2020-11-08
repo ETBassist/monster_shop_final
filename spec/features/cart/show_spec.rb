@@ -51,6 +51,21 @@ RSpec.describe 'Cart Show Page' do
         expect(page).to have_content('Your Cart is Empty!')
         expect(page).to_not have_button('Empty Cart')
       end
+
+      it "I can see if I have discounts on any items" do
+        @brian.bulk_discounts.create!(percent: 0.3,
+                                      required_quantity: 3)
+        visit item_path(@hippo)
+        click_button 'Add to Cart'
+        visit item_path(@hippo)
+        click_button 'Add to Cart'
+        visit item_path(@hippo)
+        click_button 'Add to Cart'
+
+        visit '/cart'
+        expect(page).to have_content("Total Savings: #{number_to_currency((@hippo.price * 3) * 0.3)}")
+        expect(page).to have_content("Final Subtotal: #{number_to_currency((@hippo.price * 3) - (@hippo.price * 3) * 0.3)}")
+      end
     end
 
     describe 'I can manipulate my cart' do

@@ -1,5 +1,5 @@
 class BulkDiscount < ApplicationRecord
-  belongs_to :user
+  belongs_to :merchant
 
   validates_presence_of :percent, :required_quantity
 end

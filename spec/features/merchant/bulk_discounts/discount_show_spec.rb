@@ -4,8 +4,10 @@ feature 'Discount Show Page' do
   given!(:user) { @merchant_admin = create(:user, role: 1) }
   describe "When I visit a discount show page" do
     before :each do
+      @merchant = create(:merchant)
+      @merchant_admin.update(merchant_id: @merchant.id)
       page.set_rack_session(user_id: @merchant_admin.id)
-      @discount = @merchant_admin.bulk_discounts.create(percent: 0.5,
+      @discount = @merchant.bulk_discounts.create(percent: 0.5,
                                                         required_quantity: 199)
     end
 

@@ -14,4 +14,12 @@ class OrderItem < ApplicationRecord
   def fulfillable?
     item.inventory >= quantity
   end
+
+  def find_discount
+    item.find_discount(quantity)
+  end
+
+  def total_after_discount
+    subtotal - (find_discount.percent * subtotal)
+  end
 end

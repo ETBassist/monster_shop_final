@@ -37,6 +37,13 @@ RSpec.describe Item do
     it '.average_rating' do
       expect(@ogre.average_rating.round(2)).to eq(3.00)
     end
+
+    it '.find_discount(quantity)' do
+      discount = @megan.bulk_discounts.create!(percent: 0.05,
+                                               required_quantity: 10)
+      expect(@ogre.find_discount(10)).to eq(discount)
+      expect(@ogre.find_discount(9)).to eq(nil)
+    end
   end
 
   describe 'Class Methods' do

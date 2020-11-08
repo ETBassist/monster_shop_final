@@ -45,6 +45,10 @@ class Cart
     end
   end
 
+  def subtotal_without_discount(item_id)
+    count_of(item_id) * Item.find(item_id).price
+  end
+
   def discount_amount(item)
     (count_of(item.id) * item.price) * item.find_discount(count_of(item.id)).percent
   end

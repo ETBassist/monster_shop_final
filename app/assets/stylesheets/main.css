@@ -1,0 +1,17 @@
+nav {
+  display: flex;
+  background-color: #ff6611;
+  height: 50px;
+  justify-content: center;
+  padding: 5px;
+}
+
+nav a {
+  padding: 15px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #110000;
+  font-weight: bold; 
+}

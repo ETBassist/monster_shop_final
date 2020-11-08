@@ -31,8 +31,6 @@ class Item < ApplicationRecord
   end
   
   def find_discount(item_quantity)
-    merchant.bulk_discounts.where('required_quantity <= ?', item_quantity)
-      .order(percent: :desc)
-      .first
+    merchant.find_discount(item_quantity)
   end
 end

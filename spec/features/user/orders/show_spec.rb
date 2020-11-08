@@ -14,7 +14,7 @@ RSpec.describe 'Order Show Page' do
       @order_1 = @user.orders.create!(status: "packaged")
       @order_2 = @user.orders.create!(status: "pending")
       @order_item_1 = @order_1.order_items.create!(item: @ogre, price: @ogre.price, quantity: 2, fulfilled: true)
-      @order_item_2 = @order_2.order_items.create!(item: @giant, price: @hippo.price, quantity: 2, fulfilled: true)
+      @order_item_2 = @order_2.order_items.create!(item: @giant, price: @hippo.price, quantity: 5, fulfilled: true)
       @order_item_3 = @order_2.order_items.create!(item: @ogre, price: @ogre.price, quantity: 2, fulfilled: false)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
     end
@@ -79,8 +79,24 @@ RSpec.describe 'Order Show Page' do
 
       expect(@order_item_2.fulfilled).to eq(false)
       expect(@order_item_3.fulfilled).to eq(false)
-      expect(@giant.inventory).to eq(5)
+      expect(@giant.inventory).to eq(8)
       expect(@ogre.inventory).to eq(7)
+    end
+
+    it 'I see an items discounted price if it qualifies for a discount' do
+      discount = @megan.bulk_discounts.create!(percent: 0.1,
+                                               required_quantity: 4)
+      expected_amount = number_to_currency(@order_item_2.subtotal - (@order_item_2.subtotal * discount.percent))
+
+      visit "/profile/orders/#{@order_2.id}"
+
+      within("#order-item-#{@order_item_2.id}") do
+        expect(page).to have_content("Discounted Subtotal: #{expected_amount}")
+      end
+
+      within("#order-item-#{@order_item_3.id}") do
+        expect(page).to have_content("Subtotal: #{number_to_currency(@order_item_3.subtotal)}")
+      end
     end
   end
 end

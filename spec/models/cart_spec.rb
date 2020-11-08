@@ -52,6 +52,13 @@ RSpec.describe Cart do
       expect(@cart.grand_total).to eq(245.0)
     end
 
+    it '.discount_amount(item_id)' do
+      5.times do
+        @cart.add_item(@hippo.id.to_s)
+      end
+      expect(@cart.discount_amount(@hippo)).to eq(125.0)
+    end
+
     it '.count_of()' do
       expect(@cart.count_of(@ogre.id)).to eq(1)
       expect(@cart.count_of(@giant.id)).to eq(2)

@@ -45,6 +45,10 @@ class Cart
     end
   end
 
+  def discount_amount(item)
+    (count_of(item.id) * item.price) * item.find_discount(count_of(item.id)).percent
+  end
+
   def limit_reached?(item_id)
     count_of(item_id) == Item.find(item_id).inventory
   end

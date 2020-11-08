@@ -43,11 +43,18 @@ RSpec.describe OrderItem do
 
     it '.find_discount' do
       @brian.bulk_discounts.create!(percent: 0.05,
-                                                required_quantity: 10)
+                                    required_quantity: 10)
       discount2 = @brian.bulk_discounts.create!(percent: 0.55,
                                                 required_quantity: 20)
       expect(@order_item_3.find_discount).to eq(discount2)
       expect(@order_item_1.find_discount).to eq(nil)
+    end
+
+    it '.total_after_discount' do
+      discount1 = @brian.bulk_discounts.create!(percent: 0.25,
+                                                required_quantity: 10)
+      expected = @order_item_1.subtotal - (@order_item_1.subtotal * discount1.percent)
+      expect(@order_item_1.total_after_discount).to eq(expected)
     end
   end
 end

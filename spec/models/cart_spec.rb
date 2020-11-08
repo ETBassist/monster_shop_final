@@ -64,6 +64,13 @@ RSpec.describe Cart do
       expect(@cart.count_of(@giant.id)).to eq(2)
     end
 
+    it '.subtotal_without_discount(item_id)' do
+      5.times do
+        @cart.add_item(@hippo.id.to_s)
+      end
+      expect(@cart.subtotal_without_discount(@hippo.id)).to eq(250.0)
+    end
+
     it '.subtotal_of()' do
       expect(@cart.subtotal_of(@ogre.id)).to eq(20)
       expect(@cart.subtotal_of(@giant.id)).to eq(100)

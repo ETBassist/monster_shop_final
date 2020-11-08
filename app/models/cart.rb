@@ -39,7 +39,7 @@ class Cart
   def subtotal_of(item_id)
     item = Item.find(item_id)
     if item.find_discount(count_of(item_id))
-      (count_of(item_id) * item.price) * item.find_discount(count_of(item_id)).percent
+      (count_of(item_id) * item.price) - discount_amount(item)
     else
       count_of(item_id) * item.price
     end

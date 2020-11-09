@@ -1,4 +1,6 @@
 class AddressesController < ApplicationController
+  before_action :require_user
+
   def new
     @address = Address.new
   end

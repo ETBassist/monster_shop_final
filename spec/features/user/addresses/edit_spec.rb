@@ -34,5 +34,15 @@ feature "User/Addresses/Edit" do
 
       expect(@user.addresses.last.address).to eq(new_address)
     end
+
+    it "If I fill in a field with nothing I'm returned to the page and see a flash message" do
+      visit "/profile/addresses/#{@address.id}/edit"
+
+      fill_in(:city, with: nil)
+
+      click_button("Update Address")
+
+      expect(page).to have_content("City can't be blank")
+    end
   end
 end

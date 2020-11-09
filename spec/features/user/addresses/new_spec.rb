@@ -29,6 +29,7 @@ feature "User/Addresses/New" do
       click_button("Create Address")
 
       expect(current_path).to eq("/profile")
+      expect(page).to have_content("Address Added")
       expect(@user.addresses.last.nickname).to eq("My Crib")
       expect(@user.addresses.last.address).to eq("123 Dope Street")
       expect(@user.addresses.last.city).to eq("Awesome Town")

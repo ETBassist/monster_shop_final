@@ -6,6 +6,7 @@ class AddressesController < ApplicationController
     user = User.find(current_user.id)
     address = user.addresses.new(address_params)
     address.save
+    flash[:success] = "Address Added"
     redirect_to '/profile'
   end
 

@@ -21,5 +21,18 @@ feature "User/Addresses/Edit" do
       expect(page).to have_field(:state, with: @address.state)
       expect(page).to have_field(:zip, with: @address.zip)
     end
+
+    it "I can fill in a field and click submit to update an address and be taken to my profile" do
+      new_address = "321 Slightly Less Dope Way"
+      visit "/profile/addresses/#{@address.id}/edit"
+
+      fill_in(:address, with: new_address)
+
+      click_button("Update Address")
+
+      expect(current_path).to eq("/profile")
+
+      expect(@user.addresses.last.address).to eq(new_address)
+    end
   end
 end

@@ -1,18 +1,23 @@
 class AddressesController < ApplicationController
   def new
+    @address = Address.new
   end
 
   def create
     user = User.find(current_user.id)
-    address = user.addresses.new(address_params)
-    address.save
-    flash[:success] = "Address Added"
-    redirect_to '/profile'
+    @address = user.addresses.new(address_params)
+    if @address.save
+      flash[:success] = "Address Added"
+      redirect_to '/profile'
+    else
+      flash[:notice] = @address.errors.full_messages.to_sentence
+      render :new
+    end
   end
 
   private
 
   def address_params
-    params.permit(:nickname, :address, :city, :state, :zip)
+    params.require(:address).permit(:nickname, :address, :city, :state, :zip)
   end
 end

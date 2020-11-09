@@ -21,6 +21,12 @@ class AddressesController < ApplicationController
     end
   end
 
+  def update
+    @address = Address.find(params[:id])
+    @address.update(address_params)
+    redirect_to '/profile'
+  end
+
   private
 
   def address_params

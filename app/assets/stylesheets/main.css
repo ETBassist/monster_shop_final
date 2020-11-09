@@ -4,11 +4,13 @@ nav {
   height: 50px;
   justify-content: center;
   padding: 5px;
+  border-radius: 5px;
 }
 
 nav a {
   padding: 15px;
   text-decoration: none;
+  color: #057DCD;
 }
 
 nav a:hover {
@@ -16,7 +18,34 @@ nav a:hover {
   font-weight: bold;
 }
 
+h1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #F86F15;
+  margin: 20px;
+  border-radius: 5px;
+}
+
+body {
   display: flex;
   flex-direction: column;
   align-items: center;

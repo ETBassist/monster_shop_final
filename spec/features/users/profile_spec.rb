@@ -5,6 +5,7 @@ RSpec.describe "User Profile Path" do
     before :each do
       @user = User.create!(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword')
       @admin = User.create!(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'admin@example.com', password: 'securepassword')
+      @address1 = @user.addresses.create!(nickname: 'Home', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
     end
 
     it "I can view my profile page" do
@@ -104,6 +105,19 @@ RSpec.describe "User Profile Path" do
 
       expect(page).to have_content("email: [\"has already been taken\"]")
       expect(page).to have_button "Update Profile"
+    end
+
+    it "I see all the addresses that I've created and a link to edit or delete them" do
+      visit profile_path
+
+      within("#address-#{@address1.id}") do
+        expect(page).to have_content(@address1.nickname)
+        expect(page).to have_link("Edit Address")
+        click_link("Delete Address")
+      end
+      
+      expect(current_path).to eq("/profile")
+      expect(page).to_not have_css("#address-#{@address1.id}")
     end
   end
 end

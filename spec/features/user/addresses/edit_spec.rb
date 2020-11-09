@@ -33,6 +33,7 @@ feature "User/Addresses/Edit" do
       expect(current_path).to eq("/profile")
 
       expect(@user.addresses.last.address).to eq(new_address)
+      expect(page).to have_content("Address Updated")
     end
 
     it "If I fill in a field with nothing I'm returned to the page and see a flash message" do

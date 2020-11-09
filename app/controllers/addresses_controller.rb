@@ -23,8 +23,13 @@ class AddressesController < ApplicationController
 
   def update
     @address = Address.find(params[:id])
-    @address.update(address_params)
-    redirect_to '/profile'
+    if @address.update(address_params)
+      flash[:success] = "Address Updated"
+      redirect_to '/profile'
+    else
+      flash[:notice] = @address.errors.full_messages.to_sentence
+      render :edit
+    end
   end
 
   private

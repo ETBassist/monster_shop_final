@@ -29,6 +29,10 @@ Rails.application.routes.draw do
   get '/profile/orders/:id', to: 'user/orders#show'
   delete '/profile/orders/:id', to: 'user/orders#cancel'
 
+  scope '/profile' do
+    resources :addresses, only: :new
+  end
+
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#login'
   get '/logout', to: 'sessions#logout'

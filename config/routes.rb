@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   delete '/profile/orders/:id', to: 'user/orders#cancel'
 
   scope '/profile' do
-    resources :addresses, only: [:new, :create]
+    resources :addresses, only: [:new, :create, :edit, :update]
   end
 
   get '/login', to: 'sessions#new'

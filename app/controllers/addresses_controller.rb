@@ -5,6 +5,10 @@ class AddressesController < ApplicationController
     @address = Address.new
   end
 
+  def edit
+    @address = Address.find(params[:id])
+  end
+
   def create
     user = User.find(current_user.id)
     @address = user.addresses.new(address_params)

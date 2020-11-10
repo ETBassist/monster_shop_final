@@ -25,6 +25,12 @@ RSpec.describe 'User Registration' do
 
       expect(current_path).to eq(profile_path)
       expect(page).to have_content('Welcome, Megan!')
+      address = Address.all.last
+      expect(address.nickname).to eq('home')
+      expect(address.address).to eq('123 Main St')
+      expect(address.city).to eq('Denver')
+      expect(address.state).to eq('CO')
+      expect(address.zip).to eq(80218)
     end
 
     describe 'I can not register as a user if' do

@@ -2,8 +2,8 @@ class Order < ApplicationRecord
   has_many :order_items
   has_many :items, through: :order_items
   belongs_to :user
-  has_many :order_addresses
-  has_many :addresses, through: :order_addresses
+  has_one :order_address
+  has_one :address, through: :order_address
 
 
   enum status: ['pending', 'packaged', 'shipped', 'cancelled']

@@ -38,7 +38,7 @@ RSpec.describe 'Create Order' do
         expect(page).to have_link("#{order.id}")
       end
 
-      expect(order.addresses.last).to eq(address)
+      expect(order.address).to eq(address)
     end
 
     it "I see a link to create an address if I have no addresses" do

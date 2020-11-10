@@ -5,7 +5,7 @@ RSpec.describe Order do
     it {should have_many :order_items}
     it {should have_many(:items).through(:order_items)}
     it {should belong_to :user}
-    it { should have_many(:addresses).through(:order_addresses) }
+    it { should have_one(:address).through(:order_address) }
   end
 
   describe 'instance methods' do

@@ -16,6 +16,16 @@ RSpec.describe 'Order Show Page' do
       @order_item_1 = @order_1.order_items.create!(item: @ogre, price: @ogre.price, quantity: 2, fulfilled: true)
       @order_item_2 = @order_2.order_items.create!(item: @giant, price: @hippo.price, quantity: 5, fulfilled: true)
       @order_item_3 = @order_2.order_items.create!(item: @ogre, price: @ogre.price, quantity: 2, fulfilled: false)
+      @address1 = Address.create(nickname: 'home',
+                                address: '123 Dope St',
+                                city: 'Awesome Town',
+                                state: 'YO',
+                                zip: 12345,
+                                user_id: @user.id)
+      OrderAddress.create!(order_id: @order_1.id,
+                           address_id: @address1.id)
+      OrderAddress.create!(order_id: @order_2.id,
+                           address_id: @address1.id)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
     end
 
@@ -100,32 +110,24 @@ RSpec.describe 'Order Show Page' do
     end
 
     it 'I see a button to update the address if the status is not shipped' do
-      address1 = Address.create(nickname: 'home',
-                                address: '123 Dope St',
-                                city: 'Awesome Town',
-                                state: 'YO',
-                                zip: 12345,
-                                user_id: @user.id)
       address2 = Address.create(nickname: 'work',
                                 address: '221B Baker St',
                                 city: 'London',
                                 state: 'UK',
                                 zip: 10000,
                                 user_id: @user.id)
-      OrderAddress.create!(order_id: @order_2.id,
-                           address_id: address1.id)
       
       visit "/profile/orders/#{@order_2.id}"
 
       within('#shipping-address') do
-        expect(page).to have_content(address1.nickname)
-        expect(page).to have_content(address1.address)
-        expect(page).to have_content(address1.city)
-        expect(page).to have_content(address1.state)
-        expect(page).to have_content(address1.zip)
+        expect(page).to have_content(@address1.nickname)
+        expect(page).to have_content(@address1.address)
+        expect(page).to have_content(@address1.city)
+        expect(page).to have_content(@address1.state)
+        expect(page).to have_content(@address1.zip)
       end
 
-      expect(page).to have_select(:addreses, with_options: [address1, address2])
+      expect(page).to have_select(:addreses, with_options: [@address1, address2])
       select('work', from: :addresses)
       click_button('Change Address')
       expect(current_path).to eq("/profile/orders/#{@order_2.id}")

@@ -37,6 +37,8 @@ class AddressesController < ApplicationController
     if address.can_be_deleted?
       address.destroy
       flash[:success] = "Address Deleted"
+    else
+      flash[:notice] = "Cannot delete an address used in a shipped order"
     end
     redirect_to '/profile'
   end

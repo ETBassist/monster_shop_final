@@ -9,6 +9,14 @@ class User::OrdersController < ApplicationController
     @order = current_user.orders.find(params[:id])
   end
 
+  # Consider creating OrderAddressesController to handle this?
+  def update
+    order = Order.find(params[:id])
+    order.order_address.update(address_id: params[:addresses])
+    flash[:notice] = 'Address Changed'
+    redirect_to "/profile/orders/#{order.id}"
+  end
+
   def create
     order = current_user.orders.new
     order.save
@@ -19,6 +27,8 @@ class User::OrdersController < ApplicationController
           price: item.price
           })
       end
+    OrderAddress.create(address_id: params[:addresses], 
+                        order_id: order.id)
     session.delete(:cart)
     flash[:notice] = "Order created successfully!"
     redirect_to '/profile/orders'

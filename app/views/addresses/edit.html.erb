@@ -1,0 +1,24 @@
+<%= form_with model: @address, method: :patch, local: true do |f| %>
+  
+  <%= f.label :nickname %>
+  <%= f.text_field :nickname, id: :nickname %>
+
+  <%= f.label :address %>
+  <%= f.text_field :address, id: :address%>
+
+  <%= f.label :city %>
+  <%= f.text_field :city, id: :city %>
+
+  <%= f.label :state %>
+  <%= f.text_field :state, id: :state %>
+
+  <%= f.label :zip %>
+  <%= f.number_field :zip, id: :zip %>
+
+  <% if @address.has_been_shipped_to? %>
+    <p>Cannot Update An Address That Has Been Shipped To</p>
+  <% else %>
+    <%= f.submit %>
+  <% end %>
+
+<% end %>

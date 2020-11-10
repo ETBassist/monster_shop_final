@@ -3,8 +3,10 @@ require 'rails_helper'
 RSpec.describe "User Profile Path" do
   describe "As a registered user" do
     before :each do
-      @user = User.create!(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword')
-      @admin = User.create!(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'admin@example.com', password: 'securepassword')
+      @user = User.create!(name: 'Megan', email: 'megan@example.com', password: 'securepassword')
+      @admin = User.create!(name: 'Megan', email: 'admin@example.com', password: 'securepassword')
+      @address1 = @user.addresses.create!(nickname: 'Home', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
+      @address2 = @user.addresses.create!(nickname: 'Home', address: '129 That Other St', city: 'Denver', state: 'CO', zip: 80235)
     end
 
     it "I can view my profile page" do
@@ -13,8 +15,8 @@ RSpec.describe "User Profile Path" do
 
       expect(page).to have_content(@user.name)
       expect(page).to have_content(@user.email)
-      expect(page).to have_content(@user.address)
-      expect(page).to have_content("#{@user.city} #{@user.state} #{@user.zip}")
+      expect(page).to have_content(@user.addresses.first.address)
+      expect(page).to have_content("#{@user.addresses.first.city} #{@user.addresses.first.state} #{@user.addresses.first.zip}")
       expect(page).to_not have_content(@user.password)
       expect(page).to have_link('Edit')
     end
@@ -32,17 +34,9 @@ RSpec.describe "User Profile Path" do
 
       name = 'New Name'
       email = 'new@example.com'
-      address = '124 new str'
-      city = 'new town'
-      state = 'NY'
-      zip = '12034'
 
       fill_in "Name", with: name
       fill_in "Email", with: email
-      fill_in "Address", with: address
-      fill_in "City", with: city
-      fill_in "State", with: state
-      fill_in "Zip", with: zip
       click_button 'Update Profile'
 
       expect(current_path).to eq(profile_path)
@@ -50,8 +44,6 @@ RSpec.describe "User Profile Path" do
       expect(page).to have_content('Profile has been updated!')
       expect(page).to have_content(name)
       expect(page).to have_content(email)
-      expect(page).to have_content(address)
-      expect(page).to have_content("#{city} #{state} #{zip}")
     end
 
     it "I can update my password" do
@@ -104,6 +96,48 @@ RSpec.describe "User Profile Path" do
 
       expect(page).to have_content("email: [\"has already been taken\"]")
       expect(page).to have_button "Update Profile"
+    end
+
+    it "I see all the addresses that I've created and a link to edit or delete them" do
+      page.set_rack_session(user_id: @user.id)
+      visit "/profile"
+
+      within("#address-#{@address1.id}") do
+        expect(page).to have_content(@address1.nickname)
+        expect(page).to have_link("Edit Address")
+        click_link("Delete Address")
+      end
+
+      expect(current_path).to eq("/profile")
+      expect(page).to have_content("Address Deleted")
+
+      expect(page).to_not have_css("#address-#{@address1.id}")
+
+      within("#address-#{@address2.id}") do
+        click_link("Edit Address")
+      end
+
+      expect(current_path).to eq("/profile/addresses/#{@address2.id}/edit")
+    end
+
+    it "If an address cannot be deleted a flash message is shown and the address is still there" do
+      page.set_rack_session(user_id: @user.id)
+      address2 = @user.addresses.create(nickname: "Home",
+                                        address: "246 Cozy Lane",
+                                        city: "Boulder",
+                                        state: "CO",
+                                        zip: 12346)
+      address2.orders.create!(user_id: @user.id,
+                              status: 2)
+      visit "/profile"
+
+      within("#address-#{address2.id}") do
+        click_link("Delete Address")
+      end
+
+      expect(current_path).to eq("/profile")
+      expect(page).to have_content("Cannot delete an address used in a shipped order")
+      expect(page).to have_css("#address-#{address2.id}")
     end
   end
 end

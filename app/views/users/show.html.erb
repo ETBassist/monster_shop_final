@@ -3,3 +3,11 @@
 <%= link_to 'Change Password', '/profile/edit_password' %>
 
 <%= link_to 'My Orders', '/profile/orders' %>
+
+<% @user.addresses.each do |address| %>
+  <section id="address-<%= address.id %>">
+    <%= address.nickname %>
+    <%= link_to "Edit Address", "/profile/addresses/#{address.id}/edit" %>
+    <%= link_to "Delete Address", "/profile/addresses/#{address.id}", method: :delete %><br>
+  </section>
+<% end %>

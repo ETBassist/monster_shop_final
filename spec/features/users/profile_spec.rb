@@ -108,15 +108,18 @@ RSpec.describe "User Profile Path" do
     end
 
     it "I see all the addresses that I've created and a link to edit or delete them" do
-      visit profile_path
+      page.set_rack_session(user_id: @user.id)
+      visit "/profile"
 
       within("#address-#{@address1.id}") do
         expect(page).to have_content(@address1.nickname)
         expect(page).to have_link("Edit Address")
         click_link("Delete Address")
       end
-      
+
       expect(current_path).to eq("/profile")
+      expect(page).to have_content("Address Deleted")
+      save_and_open_page
       expect(page).to_not have_css("#address-#{@address1.id}")
     end
   end

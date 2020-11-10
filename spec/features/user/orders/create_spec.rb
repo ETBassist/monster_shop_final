@@ -14,6 +14,7 @@ RSpec.describe 'Create Order' do
     end
 
     it 'I can click a link to get to create an order' do
+      @user.addresses.create(nickname: 'home', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
       visit item_path(@ogre)
       click_button 'Add to Cart'
       visit item_path(@hippo)
@@ -34,6 +35,19 @@ RSpec.describe 'Create Order' do
       within "#order-#{order.id}" do
         expect(page).to have_link("#{order.id}")
       end
+    end
+
+    it "I see a link to create an address if I have no addresses" do
+      visit item_path(@ogre)
+      click_button 'Add to Cart'
+      visit item_path(@hippo)
+      click_button 'Add to Cart'
+      visit item_path(@hippo)
+      click_button 'Add to Cart'
+
+      visit '/cart'
+
+      expect(page).to have_content("Must create an address before checking out")
     end
   end
 

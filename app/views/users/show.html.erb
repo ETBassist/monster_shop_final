@@ -1,4 +1,4 @@
-<%= render 'address' %>
+<%= render partial: 'address', locals: { user: @user, user_address: @user.addresses.first } %>
 <%= link_to 'Edit', '/profile/edit' %>
 <%= link_to 'Change Password', '/profile/edit_password' %>
 

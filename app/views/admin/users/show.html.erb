@@ -1,1 +1,1 @@
-<%= render '/users/address' %>
+<%= render partial: '/users/address', locals: { user: @user, user_address: @user.addresses.first } %>

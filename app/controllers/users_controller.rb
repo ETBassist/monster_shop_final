@@ -10,17 +10,20 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-    if @user.save
-      address = @user.addresses.new(address_params)
-      address.nickname = 'home'
-      address.save
+    @user = User.create(user_params)
+    address = @user.addresses.new(address_params)
+    address.nickname = 'home'
+    if @user.save && address.save
       session[:user_id] = @user.id
       flash[:notice] = "Welcome, #{@user.name}!"
       redirect_to profile_path
-    else
+    elsif @user.id.nil?
       generate_flash(@user)
       render :new
+    else 
+      session[:user_id] = @user.id
+      flash[:notice] = address.errors.full_messages.to_sentence
+      redirect_to new_address_path
     end
   end
 

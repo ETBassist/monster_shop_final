@@ -21,7 +21,8 @@ class Merchant < ApplicationRecord
   end
 
   def distinct_cities
-    orders.joins('JOIN addresses ON orders.user_id = addresses.user_id')
+    orders.joins(:order_address)
+          .joins(:address)
           .order('city_state')
           .distinct
           .pluck(Arel.sql("CONCAT_WS(', ', addresses.city, addresses.state) AS city_state"))

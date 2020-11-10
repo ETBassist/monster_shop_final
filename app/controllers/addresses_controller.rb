@@ -34,11 +34,11 @@ class AddressesController < ApplicationController
 
   def destroy
     address = Address.find(params[:id])
-    if address.can_be_deleted?
+    if address.has_been_shipped_to?
+      flash[:notice] = "Cannot delete an address used in a shipped order"
+    else
       address.destroy
       flash[:success] = "Address Deleted"
-    else
-      flash[:notice] = "Cannot delete an address used in a shipped order"
     end
     redirect_to '/profile'
   end

@@ -37,9 +37,9 @@ RSpec.describe Address, type: :model do
                                         status: 0)
     end
 
-    it "#can_be_deleted?" do
-      expect(@address2.can_be_deleted?).to eq(false)
-      expect(@address1.can_be_deleted?).to eq(true)
+    it "#has_been_shipped_to?" do
+      expect(@address1.has_been_shipped_to?).to eq(false)
+      expect(@address2.has_been_shipped_to?).to eq(true)
     end
   end
 end

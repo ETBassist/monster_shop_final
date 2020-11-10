@@ -28,18 +28,18 @@ RSpec.describe Address, type: :model do
                                         state: "CO",
                                         zip: 12346)
       @order1 = @address1.orders.create!(user_id: @user.id,
-                                       status: 1)
+                                        status: 1)
       @order2 = @address2.orders.create!(user_id: @user.id,
-                                       status: 2)
+                                        status: 2)
       @order3 = @address1.orders.create!(user_id: @user.id,
-                                       status: 3)
+                                        status: 3)
       @order4 = @address1.orders.create!(user_id: @user.id,
-                                       status: 0)
+                                        status: 0)
     end
 
     it "#can_be_deleted?" do
-      expect(@address1.can_be_deleted?).to eq(false)
-      expect(@address2.can_be_deleted?).to eq(true)
+      expect(@address2.can_be_deleted?).to eq(false)
+      expect(@address1.can_be_deleted?).to eq(true)
     end
   end
 end

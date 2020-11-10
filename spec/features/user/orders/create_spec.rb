@@ -14,7 +14,7 @@ RSpec.describe 'Create Order' do
     end
 
     it 'I can click a link to get to create an order' do
-      @user.addresses.create(nickname: 'home', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
+      address = @user.addresses.create(nickname: 'home', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
       visit item_path(@ogre)
       click_button 'Add to Cart'
       visit item_path(@hippo)
@@ -24,6 +24,7 @@ RSpec.describe 'Create Order' do
 
       visit '/cart'
 
+      select('home', from: :addresses)
       click_button 'Check Out'
 
       order = Order.last
@@ -35,6 +36,8 @@ RSpec.describe 'Create Order' do
       within "#order-#{order.id}" do
         expect(page).to have_link("#{order.id}")
       end
+
+      expect(order.addresses.last).to eq(address)
     end
 
     it "I see a link to create an address if I have no addresses" do

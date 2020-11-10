@@ -9,6 +9,7 @@ class User::OrdersController < ApplicationController
     @order = current_user.orders.find(params[:id])
   end
 
+  # Consider creating OrderAddressesController to handle this?
   def update
     order = Order.find(params[:id])
     order.order_address.update(address_id: params[:addresses])

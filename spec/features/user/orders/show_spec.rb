@@ -141,5 +141,13 @@ RSpec.describe 'Order Show Page' do
         expect(page).to have_content(address2.zip)
       end
     end
+
+    it 'I do not see a form to update the address if the order is shipped' do
+      @order_2.update(status: 2)
+      @order_2.reload
+      visit "/profile/orders/#{@order_2.id}"
+
+      expect(page).to_not have_css("#change-address")
+    end
   end
 end

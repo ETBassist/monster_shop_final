@@ -6,6 +6,7 @@ RSpec.describe "User Profile Path" do
       @user = User.create!(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword')
       @admin = User.create!(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'admin@example.com', password: 'securepassword')
       @address1 = @user.addresses.create!(nickname: 'Home', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
+      @address2 = @user.addresses.create!(nickname: 'Home', address: '129 That Other St', city: 'Denver', state: 'CO', zip: 80235)
     end
 
     it "I can view my profile page" do
@@ -119,8 +120,14 @@ RSpec.describe "User Profile Path" do
 
       expect(current_path).to eq("/profile")
       expect(page).to have_content("Address Deleted")
-      save_and_open_page
+
       expect(page).to_not have_css("#address-#{@address1.id}")
+
+      within("#address-#{@address2.id}") do
+        click_link("Edit Address")
+      end
+
+      expect(current_path).to eq("/profile/addresses/#{@address2.id}/edit")
     end
   end
 end

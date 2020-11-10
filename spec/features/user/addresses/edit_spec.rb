@@ -45,5 +45,14 @@ feature "User/Addresses/Edit" do
 
       expect(page).to have_content("City can't be blank")
     end
+
+    it "If an address has been shipped to, I cannot change it" do
+      @address.orders.create!(user_id: @user.id, status: 2)
+
+      visit "/profile/addresses/#{@address.id}/edit"
+      
+      expect(page).to_not have_button("Update Address")
+      expect(page).to have_content("Cannot Update An Address That Has Been Shipped To")
+    end
   end
 end

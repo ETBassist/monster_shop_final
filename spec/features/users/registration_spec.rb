@@ -45,6 +45,19 @@ RSpec.describe 'User Registration' do
         expect(page).to have_content("password: [\"can't be blank\"]")
       end
 
+      it 'I do not fill in the address fields' do
+        visit registration_path
+
+        fill_in 'Name', with: 'Megan'
+        fill_in 'Email', with: 'megan@example.com'
+        fill_in 'Password', with: 'securepassword'
+        fill_in 'Password confirmation', with: 'securepassword'
+        click_button 'Register'
+
+        expect(page).to have_button('Register')
+        expect(page).to have_content("addresses: [\"is invalid\"]")
+      end
+
       it 'I use a non-unique email' do
         user = User.create(name: 'Megan', email: 'megan@example.com', password: 'securepassword')
 

@@ -129,5 +129,25 @@ RSpec.describe "User Profile Path" do
 
       expect(current_path).to eq("/profile/addresses/#{@address2.id}/edit")
     end
+
+    it "If an address cannot be deleted a flash message is shown and the address is still there" do
+      page.set_rack_session(user_id: @user.id)
+      address2 = @user.addresses.create(nickname: "Home",
+                                        address: "246 Cozy Lane",
+                                        city: "Boulder",
+                                        state: "CO",
+                                        zip: 12346)
+      address2.orders.create!(user_id: @user.id,
+                              status: 2)
+      visit "/profile"
+
+      within("#address-#{address2.id}") do
+        click_link("Delete Address")
+      end
+
+      expect(current_path).to eq("/profile")
+      expect(page).to have_content("Cannot delete an address used in a shipped order")
+      expect(page).to have_css("#address-#{address2.id}")
+    end
   end
 end

@@ -2,6 +2,9 @@ class BulkDiscount < ApplicationRecord
   belongs_to :merchant
 
   validates_presence_of :percent, :required_quantity
+
+  validates_numericality_of :percent, greater_than: 0
+  validates_numericality_of :required_quantity, greater_than: 0
 end
 
 

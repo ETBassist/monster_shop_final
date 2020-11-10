@@ -17,6 +17,8 @@ RSpec.describe 'Merchant Show Page' do
       @order_1 = @user_1.orders.create!
       @order_2 = @user_2.orders.create!
       @order_2 = @user_2.orders.create!
+      OrderAddress.create!(order_id: @order_1.id, address_id: @address1.id)
+      OrderAddress.create!(order_id: @order_2.id, address_id: @address2.id)
       @order_1.order_items.create!(item: @ogre, price: @ogre.price, quantity: 2)
       @order_2.order_items.create!(item: @giant, price: @hippo.price, quantity: 2)
       @order_2.order_items.create!(item: @ogre, price: @hippo.price, quantity: 2)

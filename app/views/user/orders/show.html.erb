@@ -8,7 +8,16 @@
 
 <section id="shipping-address">
   <%= @order.address.nickname %>
+  <%= @order.address.address %>
+  <%= @order.address.city %>
+  <%= @order.address.state %>
+  <%= @order.address.zip %>
 </section>
+
+<%= form_tag "/orders/#{@order.id}", method: :patch do %>
+  <%= select_tag :addresses, options_from_collection_for_select(@order.user.addresses, 'id', 'nickname') %>
+  <%= submit_tag 'Change Address' %>
+<% end %>
 
 <h2>Order Items</h2>
 <% @order.order_items.each do |order_item| %>

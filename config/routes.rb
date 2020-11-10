@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get '/profile/edit', to: 'users#edit'
   get '/profile/edit_password', to: 'users#edit_password'
   post '/orders', to: 'user/orders#create'
+  patch '/orders/:id', to: 'user/orders#update'
   get '/profile/orders', to: 'user/orders#index'
   get '/profile/orders/:id', to: 'user/orders#show'
   delete '/profile/orders/:id', to: 'user/orders#cancel'

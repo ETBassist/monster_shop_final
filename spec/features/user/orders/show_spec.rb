@@ -127,7 +127,7 @@ RSpec.describe 'Order Show Page' do
         expect(page).to have_content(@address1.zip)
       end
 
-      expect(page).to have_select(:addreses, with_options: [@address1, address2])
+      expect(page).to have_select(:addresses, with_options: [@address1.nickname, address2.nickname])
       select('work', from: :addresses)
       click_button('Change Address')
       expect(current_path).to eq("/profile/orders/#{@order_2.id}")

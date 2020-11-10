@@ -19,6 +19,8 @@ class User::OrdersController < ApplicationController
           price: item.price
           })
       end
+    OrderAddress.create(address_id: params[:addresses], 
+                        order_id: order.id)
     session.delete(:cart)
     flash[:notice] = "Order created successfully!"
     redirect_to '/profile/orders'

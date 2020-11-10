@@ -15,6 +15,7 @@ RSpec.describe 'Create Order' do
 
     it 'I can click a link to get to create an order' do
       address = @user.addresses.create(nickname: 'home', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
+      @user.addresses.create(nickname: 'work', address: '221B Baker St', city: 'London', state: 'UK', zip: 10000)
       visit item_path(@ogre)
       click_button 'Add to Cart'
       visit item_path(@hippo)

@@ -24,7 +24,10 @@
     <% if current_user && current_user.addresses.empty? %>
       <p>Must create an address before checking out</p>
     <% elsif current_user %>
-      <%= button_to 'Check Out', '/orders' %>
+      <%= form_tag '/orders' do %>
+        <%= select_tag(:addresses, options_from_collection_for_select(current_user.addresses, 'id', 'nickname')) %>
+        <%= submit_tag 'Check Out' %>
+      <% end %>
     <% else %>
       <p>You must <%= link_to 'register', registration_path %> or <%= link_to 'log in', login_path %> to checkout.</p>
     <% end %>

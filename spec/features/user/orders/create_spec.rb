@@ -51,7 +51,9 @@ RSpec.describe 'Create Order' do
 
       visit '/cart'
 
-      expect(page).to have_content("Must create an address before checking out")
+      expect(page).to have_link("Create an Address to Check Out")
+      click_link("Create an Address to Check Out")
+      expect(current_path).to eq('profile/addresses/new')
     end
   end
 

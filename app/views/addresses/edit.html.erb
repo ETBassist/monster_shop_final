@@ -15,5 +15,10 @@
   <%= f.label :zip %>
   <%= f.number_field :zip, id: :zip %>
 
-  <%= f.submit %>
+  <% if @address.has_been_shipped_to? %>
+    <p>Cannot Update An Address That Has Been Shipped To</p>
+  <% else %>
+    <%= f.submit %>
+  <% end %>
+
 <% end %>

@@ -98,5 +98,46 @@ RSpec.describe 'Order Show Page' do
         expect(page).to have_content("Subtotal: #{number_to_currency(@order_item_3.subtotal)}")
       end
     end
+
+    it 'I see a button to update the address if the status is not shipped' do
+      address1 = Address.create(nickname: 'home',
+                                address: '123 Dope St',
+                                city: 'Awesome Town',
+                                state: 'YO',
+                                zip: 12345,
+                                user_id: @user.id)
+      address2 = Address.create(nickname: 'work',
+                                address: '221B Baker St',
+                                city: 'London',
+                                state: 'UK',
+                                zip: 10000,
+                                user_id: @user.id)
+      OrderAddress.create!(order_id: @order_2.id,
+                           address_id: address1.id)
+      
+      visit "/profile/orders/#{@order_2.id}"
+
+      within('#shipping-address') do
+        expect(page).to have_content(address1.nickname)
+        expect(page).to have_content(address1.address)
+        expect(page).to have_content(address1.city)
+        expect(page).to have_content(address1.state)
+        expect(page).to have_content(address1.zip)
+      end
+
+      expect(page).to have_select(:addreses, with_options: [address1, address2])
+      select('work', from: :addresses)
+      click_button('Change Address')
+      expect(current_path).to eq("/profile/orders/#{@order_2.id}")
+      expect(page).to have_content('Address Changed')
+
+      within('#shipping-address') do
+        expect(page).to have_content(address2.nickname)
+        expect(page).to have_content(address2.address)
+        expect(page).to have_content(address2.city)
+        expect(page).to have_content(address2.state)
+        expect(page).to have_content(address2.zip)
+      end
+    end
   end
 end

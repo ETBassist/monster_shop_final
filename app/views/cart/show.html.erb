@@ -22,7 +22,7 @@
   <% end %>
   <section id='checkout'>
     <% if current_user && current_user.addresses.empty? %>
-      <p>Must create an address before checking out</p>
+      <%= link_to 'Create an Address to Check Out', '/profile/addresses/new' %>
     <% elsif current_user %>
       <%= form_tag '/orders' do %>
         <%= select_tag(:addresses, options_from_collection_for_select(current_user.addresses, 'id', 'nickname')) %>

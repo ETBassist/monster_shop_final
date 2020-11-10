@@ -54,8 +54,8 @@ RSpec.describe 'User Registration' do
         fill_in 'Password confirmation', with: 'securepassword'
         click_button 'Register'
 
-        expect(page).to have_button('Register')
-        expect(page).to have_content("addresses: [\"is invalid\"]")
+        expect(current_path).to eq(new_address_path)
+        expect(page).to have_content("Address can't be blank")
       end
 
       it 'I use a non-unique email' do

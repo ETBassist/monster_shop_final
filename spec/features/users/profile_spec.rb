@@ -148,7 +148,7 @@ RSpec.describe "User Profile Path" do
         click_link("#{@address1.nickname}")
       end
 
-      expect(current_path).to eq("/addresses/#{@address1.id}")
+      expect(current_path).to eq("/profile/addresses/#{@address1.id}")
       expect(page).to have_content(@address1.nickname)
       expect(page).to have_content(@address1.address)
       expect(page).to have_content(@address1.city)

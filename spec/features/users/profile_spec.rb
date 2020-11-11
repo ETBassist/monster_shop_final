@@ -155,5 +155,13 @@ RSpec.describe "User Profile Path" do
       expect(page).to have_content(@address1.state)
       expect(page).to have_content(@address1.zip)
     end
+
+    it "I see a link to create a new address" do
+      page.set_rack_session(user_id: @user.id)
+      visit "/profile"
+        
+      click_link("New Address")
+      expect(current_path).to eq("/profile/addresses/new")
+    end
   end
 end

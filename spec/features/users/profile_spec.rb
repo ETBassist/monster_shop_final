@@ -104,6 +104,10 @@ RSpec.describe "User Profile Path" do
 
       within("#address-#{@address1.id}") do
         expect(page).to have_content(@address1.nickname)
+        expect(page).to have_content(@address1.address)
+        expect(page).to have_content(@address1.city)
+        expect(page).to have_content(@address1.state)
+        expect(page).to have_content(@address1.zip)
         expect(page).to have_link("Edit Address")
         click_link("Delete Address")
       end

@@ -6,8 +6,10 @@
 
 <% @user.addresses.each do |address| %>
   <section id="address-<%= address.id %>">
-    <%= address.nickname %>
+    <%= link_to address.nickname, "/profile/addresses/#{address.id}" %>
     <%= link_to "Edit Address", "/profile/addresses/#{address.id}/edit" %>
     <%= link_to "Delete Address", "/profile/addresses/#{address.id}", method: :delete %><br>
   </section>
 <% end %>
+
+<%= link_to "New Address", new_address_path %>

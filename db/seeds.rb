@@ -23,6 +23,7 @@ Merchant.destroy_all
 @giant = @megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
 @hippo = @brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 1 )
 @user = User.create!(name: 'Megan', email: 'megan_1@example.com', password: 'securepassword')
+User.create!(name: 'Brian', email: 'brian@example.com', password: 'brianpass', role: 1, merchant_id: @brian.id)
 @order_1 = @user.orders.create!(status: "packaged")
 @order_2 = @user.orders.create!(status: "pending")
 @order_item_1 = @order_1.order_items.create!(item: @ogre, price: @ogre.price, quantity: 2, fulfilled: true)
@@ -38,3 +39,7 @@ OrderAddress.create!(order_id: @order_1.id,
                       address_id: @address1.id)
 OrderAddress.create!(order_id: @order_2.id,
                       address_id: @address1.id)
+@brian.bulk_discounts.create!(percent: 0.05,
+                              required_quantity: 10)
+@brian.bulk_discounts.create!(percent: 0.55,
+                              required_quantity: 20)

@@ -3,7 +3,7 @@
 <% @discounts.each do |discount| %>
   <section id="discount-<%= discount.id %>">
     <%= link_to "Discount #{discount.id}", merchant_bulk_discount_path(discount.id) %>
-    <p>Discount Percent: <%= "#{discount.percent * 100}" %>%</p>
+    <p>Discount Percent: <%= "#{(discount.percent * 100).to_i}" %>%</p>
     <p>Minimum Required Quantity: <%= discount.required_quantity %></p>
     <%= button_to "Delete #{discount.id}", "/merchant/bulk_discounts/#{discount.id}", method: :delete %>
   </section>

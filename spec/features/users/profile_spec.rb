@@ -103,11 +103,7 @@ RSpec.describe "User Profile Path" do
       visit "/profile"
 
       within("#address-#{@address1.id}") do
-        expect(page).to have_content(@address1.nickname)
-        expect(page).to have_content(@address1.address)
-        expect(page).to have_content(@address1.city)
-        expect(page).to have_content(@address1.state)
-        expect(page).to have_content(@address1.zip)
+        expect(page).to have_link("#{@address1.nickname}")
         expect(page).to have_link("Edit Address")
         click_link("Delete Address")
       end
@@ -142,6 +138,22 @@ RSpec.describe "User Profile Path" do
       expect(current_path).to eq("/profile")
       expect(page).to have_content("Cannot delete an address used in a shipped order")
       expect(page).to have_css("#address-#{address2.id}")
+    end
+
+    it "I see a link to view more details about an address" do
+      page.set_rack_session(user_id: @user.id)
+      visit "/profile"
+
+      within("#address-#{@address1.id}") do
+        click_link("#{@address1.nickname}")
+      end
+
+      expect(current_path).to eq("/addresses/#{@address1.id}")
+      expect(page).to have_content(@address1.nickname)
+      expect(page).to have_content(@address1.address)
+      expect(page).to have_content(@address1.city)
+      expect(page).to have_content(@address1.state)
+      expect(page).to have_content(@address1.zip)
     end
   end
 end

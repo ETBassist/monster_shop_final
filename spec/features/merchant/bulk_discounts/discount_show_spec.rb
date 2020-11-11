@@ -15,7 +15,7 @@ feature 'Discount Show Page' do
       visit "/merchant/bulk_discounts/#{@discount.id}"
 
       expect(page).to have_content(@discount.id)
-      expect(page).to have_content("#{@discount.percent * 100}")
+      expect(page).to have_content("#{(@discount.percent * 100).to_i}")
       expect(page).to have_content(@discount.required_quantity)
     end
 

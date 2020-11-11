@@ -22,13 +22,13 @@ feature 'Bulk Discount Index' do
 
       within("#discount-#{@discount1.id}") do
         expect(page).to have_content(@discount1.id)
-        expect(page).to have_content("#{@discount1.percent * 100}")
+        expect(page).to have_content("#{(@discount1.percent * 100).to_i}")
         expect(page).to have_content(@discount1.required_quantity)
       end
 
       within("#discount-#{@discount2.id}") do
         expect(page).to have_content(@discount2.id)
-        expect(page).to have_content("#{@discount2.percent * 100}")
+        expect(page).to have_content("#{(@discount2.percent * 100).to_i}")
         expect(page).to have_content(@discount2.required_quantity)
       end
 

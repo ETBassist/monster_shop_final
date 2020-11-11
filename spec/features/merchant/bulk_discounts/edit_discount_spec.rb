@@ -25,7 +25,7 @@ feature "Edit Discount Page" do
       click_button("Update Bulk Discount")
       expect(current_path).to eq("/merchant/bulk_discounts/#{@discount.id}")
       expect(page).to have_content("Discount Updated")
-      expect(page).to have_content("10.0%")
+      expect(page).to have_content("10%")
     end
 
     it "if I improperly fill in the fields it flashes a message and I'm returned to the edit page" do

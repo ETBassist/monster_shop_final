@@ -14,7 +14,7 @@ feature "Edit Discount Page" do
     it "I see a form with the fields prepopulated with the discounts details" do
       visit "/merchant/bulk_discounts/#{@discount.id}/edit"
 
-      expect(page).to have_field(:percent, with: (@discount.percent * 100))
+      expect(page).to have_field(:percent, with: (@discount.percent * 100).to_i)
       expect(page).to have_field(:required_quantity, with: @discount.required_quantity)
     end
 

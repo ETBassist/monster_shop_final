@@ -42,9 +42,13 @@ Rails.application.routes.draw do
   get '/profile/orders/:id', to: 'user/orders#show'
   delete '/profile/orders/:id', to: 'user/orders#cancel'
 
-  scope '/profile' do
-    resources :addresses, except: :index
-  end
+  get '/profile/addresses/new', to: 'addresses#new', as: :new_address
+  get '/profile/addresses/:id', to: 'addresses#show'
+  post '/profile/addresses', to: 'addresses#create'
+  get '/profile/addresses/:id/edit', to: 'addresses#edit'
+  patch '/profile/addresses/:id', to: 'addresses#update', as: :address
+  delete '/profile/addresses/:id', to: 'addresses#destroy'
+
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#login'

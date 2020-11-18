@@ -12,9 +12,10 @@ Rails.application.routes.draw do
   delete '/merchants/:id', to: 'merchants#destroy'
   get 'merchants/:merchant_id/items', to: 'items#index'
 
-  resources :items, only: [:index, :show] do
-    resources :reviews, only: [:new, :create]
-  end
+  get '/items', to: 'items#index'
+  get '/items/:id', to: 'items#show', as: :item
+  get 'items/:item_id/reviews/new', to: 'reviews#new', as: :new_item_review
+  post 'items/:item_id/reviews', to: 'reviews#create', as: :item_reviews
 
   resources :reviews, only: [:edit, :update, :destroy]
 

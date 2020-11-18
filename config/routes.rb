@@ -48,7 +48,15 @@ Rails.application.routes.draw do
     patch '/items/:id', to: 'items#update'
     put '/items/:id', to: 'items#update'
     delete '/items/:id', to: 'items#destroy'
-    resources :bulk_discounts
+    #resources :bulk_discounts
+    get '/bulk_discounts', to: 'bulk_discounts#index'
+    get '/bulk_discounts/new', to: 'bulk_discounts#new'
+    get '/bulk_discounts/:id', to: 'bulk_discounts#show', as: :bulk_discount
+    post '/bulk_discounts', to: 'bulk_discounts#create'
+    get '/bulk_discounts/:id/edit', to: 'bulk_discounts#edit'
+    patch '/bulk_discounts/:id', to: 'bulk_discounts#update'
+    put '/bulk_discounts/:id', to: 'bulk_discounts#update'
+    delete '/bulk_discounts/:id', to: 'bulk_discounts#destroy'
     put '/items/:id/change_status', to: 'items#change_status'
     get '/orders/:id/fulfill/:order_item_id', to: 'orders#fulfill'
   end

@@ -38,28 +38,25 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#login'
   get '/logout', to: 'sessions#logout'
 
-  namespace :merchant do
-    get '/', to: 'dashboard#index', as: :dashboard
-    get '/orders/:id', to: 'orders#show'
-    get '/items', to: 'items#index'
-    get '/items/new', to: 'items#new'
-    post '/items', to: 'items#create'
-    get '/items/:id/edit', to: 'items#edit'
-    patch '/items/:id', to: 'items#update'
-    put '/items/:id', to: 'items#update'
-    delete '/items/:id', to: 'items#destroy'
-    #resources :bulk_discounts
-    get '/bulk_discounts', to: 'bulk_discounts#index'
-    get '/bulk_discounts/new', to: 'bulk_discounts#new'
-    get '/bulk_discounts/:id', to: 'bulk_discounts#show', as: :bulk_discount
-    post '/bulk_discounts', to: 'bulk_discounts#create'
-    get '/bulk_discounts/:id/edit', to: 'bulk_discounts#edit'
-    patch '/bulk_discounts/:id', to: 'bulk_discounts#update'
-    put '/bulk_discounts/:id', to: 'bulk_discounts#update'
-    delete '/bulk_discounts/:id', to: 'bulk_discounts#destroy'
-    put '/items/:id/change_status', to: 'items#change_status'
-    get '/orders/:id/fulfill/:order_item_id', to: 'orders#fulfill'
-  end
+  get 'merchant/', to: 'merchant/dashboard#index', as: :merchant_dashboard
+  get 'merchant/orders/:id', to: 'merchant/orders#show'
+  get 'merchant/items', to: 'merchant/items#index'
+  get 'merchant/items/new', to: 'merchant/items#new'
+  post 'merchant/items', to: 'merchant/items#create'
+  get 'merchant/items/:id/edit', to: 'merchant/items#edit'
+  patch 'merchant/items/:id', to: 'merchant/items#update'
+  put 'merchant/items/:id', to: 'merchant/items#update'
+  delete 'merchant/items/:id', to: 'merchant/items#destroy'
+  get 'merchant/bulk_discounts', to: 'merchant/bulk_discounts#index'
+  get 'merchant/bulk_discounts/new', to: 'merchant/bulk_discounts#new'
+  get 'merchant/bulk_discounts/:id', to: 'merchant/bulk_discounts#show', as: :merchant_bulk_discount
+  post 'merchant/bulk_discounts', to: 'merchant/bulk_discounts#create'
+  get 'merchant/bulk_discounts/:id/edit', to: 'merchant/bulk_discounts#edit'
+  patch 'merchant/bulk_discounts/:id', to: 'merchant/bulk_discounts#update'
+  put 'merchant/bulk_discounts/:id', to: 'merchant/bulk_discounts#update'
+  delete 'merchant/bulk_discounts/:id', to: 'merchant/bulk_discounts#destroy'
+  put 'merchant/items/:id/change_status', to: 'merchant/items#change_status'
+  get 'merchant/orders/:id/fulfill/:order_item_id', to: 'merchant/orders#fulfill'
 
   namespace :admin do
     get '/', to: 'dashboard#index', as: :dashboard

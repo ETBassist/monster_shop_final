@@ -74,10 +74,10 @@ Rails.application.routes.draw do
   put 'merchant/items/:id/change_status', to: 'merchant/items#change_status'
   get 'merchant/orders/:id/fulfill/:order_item_id', to: 'merchant/orders#fulfill'
 
-  namespace :admin do
-    get '/', to: 'dashboard#index', as: :dashboard
-    resources :merchants, only: [:show, :update]
-    resources :users, only: [:index, :show]
-    patch '/orders/:id/ship', to: 'orders#ship'
-  end
+  get '/admin', to: 'admin/dashboard#index', as: :admin_dashboard
+  get '/admin/merchants/:id', to: 'admin/merchants#show'
+  patch '/admin/merchants/:id', to: 'admin/merchants#update'
+  get '/admin/users', to: 'admin/users#index'
+  get '/admin/users/:id', to: 'admin/users#show'
+  patch '/admin/orders/:id/ship', to: 'admin/orders#ship'
 end

@@ -17,7 +17,9 @@ Rails.application.routes.draw do
   get 'items/:item_id/reviews/new', to: 'reviews#new', as: :new_item_review
   post 'items/:item_id/reviews', to: 'reviews#create', as: :item_reviews
 
-  resources :reviews, only: [:edit, :update, :destroy]
+  get '/reviews/:id/edit', to: 'reviews#edit', as: :edit_review
+  patch '/reviews/:id', to: 'reviews#update'
+  delete '/reviews/:id', to: 'reviews#destroy', as: :review
 
   get '/cart', to: 'cart#show'
   post '/cart/:item_id', to: 'cart#add_item'
@@ -26,7 +28,10 @@ Rails.application.routes.draw do
   delete '/cart/:item_id', to: 'cart#remove_item'
 
   get '/registration', to: 'users#new', as: :registration
-  resources :users, only: [:create, :update]
+  
+  post 'users', to: 'users#create'
+  patch 'users/:id', to: 'users#update'
+
   patch '/user/:id', to: 'users#update'
   get '/profile', to: 'users#show'
   get '/profile/edit', to: 'users#edit'

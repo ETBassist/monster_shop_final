@@ -1,7 +1,9 @@
+<div class="container text-center mx-auto">
 <% if @merchant %>
-  <h1>All Items From <%= link_to @merchant.name, "/merchant/#{@merchant.id}" %></h1>
+  <h1 class="display-1">All Items From <%= link_to @merchant.name, "/merchant/#{@merchant.id}" %></h1>
 <% else %>
-  <h1>All Items</h1>
+  <h1 class="display-1">All Items</h1>
 <% end %>
+</div>
 
 <%= render 'index' %>

@@ -1,15 +1,19 @@
-<%= render partial: 'address', locals: { user: @user, user_address: @user.addresses.first } %>
-<%= link_to 'Edit', '/profile/edit' %>
-<%= link_to 'Change Password', '/profile/edit_password' %>
+<div class="card text-center border-dark mx-auto" style="width: 20rem;">
+  <div class="card-body">
+    <%= render partial: 'address', locals: { user: @user, user_address: @user.addresses.first } %>
+    <%= link_to 'Edit', '/profile/edit', class: "card-link" %><br>
+    <%= link_to 'Change Password', '/profile/edit_password', class: "card-link" %><br>
 
-<%= link_to 'My Orders', '/profile/orders' %>
+    <%= link_to 'My Orders', '/profile/orders', class: "card-link" %><br>
 
-<% @user.addresses.each do |address| %>
-  <section id="address-<%= address.id %>">
-    <%= link_to address.nickname, "/profile/addresses/#{address.id}" %>
-    <%= link_to "Edit Address", "/profile/addresses/#{address.id}/edit" %>
-    <%= link_to "Delete Address", "/profile/addresses/#{address.id}", method: :delete %><br>
-  </section>
-<% end %>
+      <% @user.addresses.each do |address| %>
+        <section class="card-link" id="address-<%= address.id %>">
+          <%= link_to address.nickname, "/profile/addresses/#{address.id}" %> |
+          <%= link_to "Edit Address", "/profile/addresses/#{address.id}/edit" %> |
+          <%= link_to "Delete Address", "/profile/addresses/#{address.id}", method: :delete %><br>
+        </section>
+      <% end %>
 
-<%= link_to "New Address", new_address_path %>
+    <%= link_to "New Address", new_address_path %>
+  </div>
+</div>

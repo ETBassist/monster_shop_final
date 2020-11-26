@@ -9,24 +9,26 @@
   </head>
 
   <body>
-    <nav>
-      <%= link_to 'Home', root_path %>
-      <%= link_to 'Register', registration_path unless current_user %>
-      <%= link_to 'Log In', login_path unless current_user %>
-      <% if current_user %>
-        <%= link_to 'Log Out', logout_path %>
-        <%= link_to 'Profile', profile_path %>
-        <p>Logged in as <%= current_user.name %></p>
-        <% if current_merchant_user? %>
-          <%= link_to 'Merchant Dashboard', merchant_dashboard_path %>
-        <% elsif current_admin? %>
-          <%= link_to 'Admin Dashboard', admin_dashboard_path %>
-          <%= link_to 'Users', '/admin/users' %>
-        <% end %>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+      <%= link_to 'Home', root_path, class: "navbar-brand" %>
+      <%= link_to 'Register', registration_path, class: "navbar-brand" unless current_user %>
+      <%= link_to 'Log In', login_path, class: "navbar-brand"  unless current_user %>
+      <%= link_to 'Merchants', '/merchants', class: "navbar-brand" %>
+      <%= link_to 'Items', '/items', class: "navbar-brand" %>
+      <%= link_to "Cart: #{cart.count}", cart_path, class: "navbar-brand" unless current_user && current_admin?%>
+      <% if current_merchant_user? %>
+        <%= link_to 'Merchant Dashboard', merchant_dashboard_path, class: "navbar-brand" %>
+      <% elsif current_admin? %>
+        <%= link_to 'Admin Dashboard', admin_dashboard_path, class: "navbar-brand" %>
+        <%= link_to 'Users', '/admin/users', class: "navbar-brand" %>
       <% end %>
-      <%= link_to 'Merchants', '/merchants' %>
-      <%= link_to 'Items', '/items' %>
-      <%= link_to "Cart: #{cart.count}", cart_path unless current_user && current_admin?%>
+      <% if current_user %>
+        <%= link_to 'Log Out', logout_path, class: "navbar-brand" %>
+        <%= link_to 'Profile', profile_path, class: "navbar-brand" %>
+        <span class="navbar-text">
+          Logged in as <%= current_user.name %>
+        </span>
+      <% end %>
     </nav>
     <% flash.each do |type, message| %>
     <p><%= message %></p>

@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       login_redirect(user)
     else
-      flash[:notice] = 'Your email or password was incorrect!'
+      flash.now[:notice] = 'Your email or password was incorrect!'
       render :new
     end
   end
